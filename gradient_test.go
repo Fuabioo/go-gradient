@@ -11,7 +11,7 @@ func TestAutoThemeDetection(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create gradient: %v", err)
 	}
-	
+
 	// The mode should be either Dark or Light based on terminal
 	if g.mode != Dark && g.mode != Light {
 		t.Errorf("Expected mode to be Dark or Light, got %v", g.mode)
@@ -27,7 +27,7 @@ func TestExplicitModeWithOptions(t *testing.T) {
 	if gDark.mode != Dark {
 		t.Errorf("Expected Dark mode, got %v", gDark.mode)
 	}
-	
+
 	// Test explicit light mode
 	gLight, err := New("#FF0000", "#0000FF", WithMode(Light))
 	if err != nil {
@@ -51,7 +51,7 @@ func TestBackwardCompatibility(t *testing.T) {
 
 func TestMultiGradientAutoDetection(t *testing.T) {
 	colors := []string{"#FF0000", "#00FF00", "#0000FF"}
-	
+
 	// Test auto-detection
 	g, err := NewMulti(colors)
 	if err != nil {
@@ -60,7 +60,7 @@ func TestMultiGradientAutoDetection(t *testing.T) {
 	if g.mode != Dark && g.mode != Light {
 		t.Errorf("Expected mode to be Dark or Light, got %v", g.mode)
 	}
-	
+
 	// Test explicit mode
 	gDark, err := NewMulti(colors, WithMultiMode(Dark))
 	if err != nil {
@@ -75,17 +75,17 @@ func TestDetectTerminalTheme(t *testing.T) {
 	// Test with NO_COLOR env var
 	os.Setenv("NO_COLOR", "1")
 	defer os.Unsetenv("NO_COLOR")
-	
+
 	mode := detectTerminalTheme()
 	if mode != Dark {
 		t.Errorf("Expected Dark mode when NO_COLOR is set, got %v", mode)
 	}
-	
+
 	// Test with dumb terminal
 	os.Unsetenv("NO_COLOR")
 	os.Setenv("TERM", "dumb")
 	defer os.Unsetenv("TERM")
-	
+
 	mode = detectTerminalTheme()
 	if mode != Dark {
 		t.Errorf("Expected Dark mode for dumb terminal, got %v", mode)
