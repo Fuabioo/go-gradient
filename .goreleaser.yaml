@@ -34,13 +34,16 @@ changelog:
       - "^perf:"
       - "^build:"
   groups:
-    - title: Features
+    - title: "✨ Features"
       regexp: "^.*feat[(\\w)]*:+.*$"
       order: 0
-    - title: Bug fixes
+    - title: "🐛 Bug fixes"
       regexp: "^.*fix[(\\w)]*:+.*$"
       order: 1
-    - title: Others
+    - title: "📚 Documentation"
+      regexp: "^.*docs[(\\w)]*:+.*$"
+      order: 2
+    - title: "🔧 Others"
       order: 999
 
 release:
