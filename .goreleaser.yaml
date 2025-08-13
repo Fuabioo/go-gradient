@@ -47,13 +47,21 @@ changelog:
       order: 999
 
 release:
+  github:
+    owner: fuabioo
+    name: go-gradient
+  
+  mode: replace
+  
+  draft: false
+  prerelease: auto
+  make_latest: true
+  
   name_template: "v{{ .Version }}"
   header: |
-    ## go-gradient v{{ .Version }}
-    
-    A little helper to style text in gradient style.
+    ## What's Changed
   footer: |
-    **Full Changelog**: https://github.com/fuabioo/{{ .ProjectName }}/compare/{{ .PreviousTag }}...{{ .Tag }}
+    **Full Changelog**: https://github.com/fuabioo/go-gradient/compare/{{ if .PreviousTag }}{{ .PreviousTag }}{{ else }}{{ .Tag }}{{ end }}...{{ .Tag }}
   extra_files:
     - glob: "*.md"
     - glob: "LICENSE"
