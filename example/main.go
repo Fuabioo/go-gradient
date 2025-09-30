@@ -197,6 +197,41 @@ func main() {
 		fmt.Println(line)
 	}
 	fmt.Println()
+
+	fmt.Println("9. Gradient Background Examples:")
+
+	// Create a ConsoleFormatter
+	formatter := gradient.NewConsoleFormatterAuto()
+
+	// Example 1: Blue to Purple gradient background
+	fmt.Println("9a. Blue to Purple gradient background:")
+	bgText1 := formatter.CreateGradientBackground("SUCCESS", "#3B82F6", "#8B5CF6")
+	fmt.Println(bgText1)
+	fmt.Println()
+
+	// Example 2: Green to Teal gradient background
+	fmt.Println("9b. Green to Teal gradient background:")
+	bgText2 := formatter.CreateGradientBackground("COMPLETE", "#10B981", "#06B6D4")
+	fmt.Println(bgText2)
+	fmt.Println()
+
+	// Example 3: Orange to Red gradient background for warnings/errors
+	fmt.Println("9c. Orange to Red gradient background:")
+	bgText3 := formatter.CreateGradientBackground("WARNING", "#F59E0B", "#EF4444")
+	fmt.Println(bgText3)
+	fmt.Println()
+
+	// Example 4: Pink to Purple gradient background
+	fmt.Println("9d. Pink to Purple gradient background:")
+	bgText4 := formatter.CreateGradientBackground("FANCY", "#EC4899", "#A855F7")
+	fmt.Println(bgText4)
+	fmt.Println()
+
+	// Example 5: Longer text with gradient background
+	fmt.Println("9e. Longer text with gradient background:")
+	bgText5 := formatter.CreateGradientBackground("This is a longer message", "#6366F1", "#8B5CF6")
+	fmt.Println(bgText5)
+	fmt.Println()
 }
 
 // getContrastingColor returns white or black depending on the background color brightness

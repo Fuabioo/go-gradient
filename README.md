@@ -48,6 +48,69 @@ func main() {
 }
 ```
 
+## ✨ Gradient Background
+
+The gradient background feature allows you to create text with gradient background colors using the `ConsoleFormatter`. Each character in the text gets a different background color that smoothly transitions from a start color to an end color.
+
+### Basic Usage
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/Fuabioo/go-gradient"
+)
+
+func main() {
+    // Create a formatter with auto-detected theme
+    formatter := gradient.NewConsoleFormatterAuto()
+    
+    // Create text with gradient background
+    result := formatter.CreateGradientBackground("SUCCESS", "#10B981", "#059669")
+    fmt.Println(result)
+}
+```
+
+### Creating Formatters
+
+There are two ways to create a `ConsoleFormatter`:
+
+```go
+// Auto-detect terminal theme (recommended)
+formatter := gradient.NewConsoleFormatterAuto()
+
+// Explicitly set the theme mode
+formatter := gradient.NewConsoleFormatter(gradient.Dark)
+formatter := gradient.NewConsoleFormatter(gradient.Light)
+```
+
+### Creating Gradient Backgrounds
+
+The `CreateGradientBackground` method takes three parameters:
+- `text`: The text to style
+- `startColor`: The starting color (hex format, with or without #)
+- `endColor`: The ending color (hex format, with or without #)
+
+```go
+// With # prefix
+result := formatter.CreateGradientBackground("HELLO", "#FF0000", "#0000FF")
+
+// Without # prefix (also works)
+result := formatter.CreateGradientBackground("WORLD", "00FF00", "FF00FF")
+```
+
+### Status Messages Examples
+
+```go
+formatter := gradient.NewConsoleFormatterAuto()
+
+success := formatter.CreateGradientBackground("SUCCESS", "#10B981", "#059669")
+warning := formatter.CreateGradientBackground("WARNING", "#F59E0B", "#D97706")
+error := formatter.CreateGradientBackground("ERROR", "#EF4444", "#DC2626")
+info := formatter.CreateGradientBackground("INFO", "#3B82F6", "#2563EB")
+```
+
 ## 📚 Examples
 
 ### Basic Two-Color Gradients

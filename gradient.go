@@ -17,6 +17,14 @@ const (
 	Light Mode = "light"
 )
 
+// ConsoleFormatter provides text formatting with gradient backgrounds
+type ConsoleFormatter struct {
+	mode Mode
+}
+
+// catppuccinBase defines the base color for text in Catppuccin theme
+const catppuccinBase = "#11111b"
+
 type Gradient struct {
 	startColor colorful.Color
 	endColor   colorful.Color
@@ -481,4 +489,73 @@ func (g *MultiGradient) ApplyToText(text string) string {
 	}
 
 	return result.String()
+}
+
+// NewConsoleFormatter creates a new ConsoleFormatter with the given mode
+func NewConsoleFormatter(mode Mode) *ConsoleFormatter {
+	return &ConsoleFormatter{mode: mode}
+}
+
+// NewConsoleFormatterAuto creates a new ConsoleFormatter with auto-detected mode
+func NewConsoleFormatterAuto() *ConsoleFormatter {
+	return &ConsoleFormatter{mode: detectTerminalTheme()}
+}
+
+// createGradientBackground creates a text with gradient background colors
+func (f *ConsoleFormatter) createGradientBackground(text, startColor, endColor string) string {
+	// Handle empty text case
+	if text == "" {
+		return ""
+	}
+
+	// Parse hex colors to RGB
+	startR, startG, startB := HexToRGB(startColor)
+	endR, endG, endB := HexToRGB(endColor)
+
+	textWithPadding := " " + text + " "
+	length := len(textWithPadding)
+
+	var result strings.Builder
+
+	// For each character, calculate its position in the gradient and apply background color
+	for i, char := range textWithPadding {
+		// Calculate gradient position (0.0 to 1.0)
+		var t float64
+		if length > 1 {
+			t = float64(i) / float64(length-1)
+		} else {
+			t = 0.0
+		}
+
+		// Interpolate RGB values
+		r := int(float64(startR) + t*float64(endR-startR))
+		g := int(float64(startG) + t*float64(endG-startG))
+		b := int(float64(startB) + t*float64(endB-startB))
+
+		// Create style with this background color
+		charStyle := lipgloss.NewStyle().
+			Foreground(lipgloss.Color(catppuccinBase)).
+			Background(lipgloss.Color(fmt.Sprintf("#%02x%02x%02x", r, g, b))).
+			Bold(true)
+
+		result.WriteString(charStyle.Render(string(char)))
+	}
+
+	return result.String()
+}
+
+// HexToRGB converts a hex color string to RGB values
+func HexToRGB(hex string) (int, int, int) {
+	// Remove # if present
+	hex = strings.TrimPrefix(hex, "#")
+
+	// Parse hex string
+	var r, g, b int
+	fmt.Sscanf(hex, "%02x%02x%02x", &r, &g, &b)
+	return r, g, b
+}
+
+// CreateGradientBackground creates a text with gradient background colors (public method)
+func (f *ConsoleFormatter) CreateGradientBackground(text, startColor, endColor string) string {
+	return f.createGradientBackground(text, startColor, endColor)
 }
